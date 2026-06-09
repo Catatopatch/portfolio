@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regenerative Braking System — Chad Liu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg: #f9f8f6; --surface: #ffffff; --text: #1a1916; --muted: #6b6a66; --faint: #e8e7e3; --tag-bg: #f0efe9; --tag-text: #4a4946; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Mono', monospace; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 14px; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+  nav { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--faint); z-index: 100; padding: 1rem 0; }
+  nav .container { display: flex; justify-content: space-between; align-items: center; }
+  .nav-name { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--text); text-decoration: none; }
+  .nav-back { font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--text); }
+  .hero { padding: 5rem 0 3rem; border-bottom: 1px solid var(--faint); }
+  .hero-meta { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+  .hero-summary { max-width: 600px; color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 2rem; }
+  .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .tag { font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--tag-text); background: var(--tag-bg); padding: 0.2rem 0.6rem; }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 12px; letter-spacing: 0.03em; color: var(--text); text-decoration: none; padding: 0.6rem 1.2rem; border: 1px solid var(--text); background: var(--surface); transition: background 0.2s; }
+  .btn:hover { background: var(--tag-bg); }
+  .section { padding: 3.5rem 0; border-bottom: 1px solid var(--faint); }
+  .section:last-child { border-bottom: none; }
+  .section-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+  .section h2 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 1.25rem; }
+  .prose { color: var(--muted); font-size: 13px; line-height: 1.85; }
+  .prose + .prose { margin-top: 1rem; }
+  .img-grid { display: grid; gap: 1rem; margin-top: 1.5rem; }
+  .img-grid.two { grid-template-columns: 1fr 1fr; }
+  .img-wrap { background: var(--faint); overflow: hidden; cursor: zoom-in; }
+  .img-wrap img { width: 100%; display: block; transition: transform 0.3s; }
+  .img-wrap:hover img { transform: scale(1.02); }
+  .img-caption { font-size: 11px; color: var(--muted); margin-top: 0.4rem; letter-spacing: 0.03em; }
+  .callout { background: var(--surface); border: 1px solid var(--faint); border-left: 3px solid var(--text); padding: 1rem 1.25rem; margin-top: 1.5rem; font-size: 13px; color: var(--muted); line-height: 1.75; }
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; align-items: center; justify-content: center; padding: 2rem; cursor: zoom-out; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; }
+  footer { padding: 2rem 0; text-align: center; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+  @media (max-width: 540px) { .img-grid.two { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="nav-name" href="index.html">Chad Liu</a>
+    <a class="nav-back" href="index.html">← Back to projects</a>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <div class="hero">
+      <div class="hero-meta">
+        <span>Capstone — ECE 4415/4416</span>
+        <span>Sept 2025 – April 2026</span>
+        <span>Western University</span>
+      </div>
+      <h1>Regenerative Braking System for E-bikes & E-scooters</h1>
+      <p class="hero-summary">
+        A bench-scale demonstrator that recovers kinetic energy during braking and stores it in a supercapacitor. My contributions spanned the full system schematic, physical build, component integration, and testing. Built with Damanpreet Basra and Sufyan Jamal.
+      </p>
+      <div class="tags">
+        <span class="tag">ESP32</span>
+        <span class="tag">BLDC Motor</span>
+        <span class="tag">3-Phase Inverter</span>
+        <span class="tag">Buck Converter</span>
+        <span class="tag">Supercapacitor</span>
+        <span class="tag">Power Electronics</span>
+        <span class="tag">MATLAB</span>
+      </div>
+      <a class="btn" href="regen_report.pdf" target="_blank">↗ View Full Project Report (PDF)</a>
+    </div>
+
+    <!-- Overview -->
+    <div class="section">
+      <p class="section-label">Overview</p>
+      <h2>What it does</h2>
+      <p class="prose">
+        Conventional friction brakes waste a vehicle's kinetic energy as heat. This system recovers that energy — during braking, the BLDC motor acts as a generator, converting mechanical energy back into electrical energy, which is rectified and stored in a supercapacitor via a buck converter.
+      </p>
+      <p class="prose">
+        The prototype runs from a 7.5 V / 6 A supply. The ESP32 controls the 3-phase inverter during motoring and switches the MOSFET sequence to enable regenerative braking on command. A 10 F supercapacitor serves as the energy storage element, with the buck converter regulating voltage to stay within the 2.7 V cell limit.
+      </p>
+    </div>
+
+    <!-- My contributions -->
+    <div class="section">
+      <p class="section-label">My contributions</p>
+      <h2>Schematic, build & testing</h2>
+      <p class="prose">My work covered the full system circuit schematic, physically building and wiring the hardware, integrating all components, and running validation tests on the bench.</p>
+
+      <div class="img-grid two" style="margin-top: 1.5rem;">
+        <div>
+          <div class="img-wrap" onclick="openLightbox('regen_img1.png')" style="height: 260px; overflow: hidden;">
+            <img src="regen_img1.png" alt="Full system circuit schematic" style="height: 100%; object-fit: cover;">
+          </div>
+          <p class="img-caption">Full system schematic — inverter, microcontroller, hall sensor interface, and buck converter</p>
+        </div>
+        <div>
+          <div class="img-wrap" onclick="openLightbox('regen_img2.png')" style="height: 260px; overflow: hidden;">
+            <img src="regen_img2.png" alt="Built prototype with BLDC hub motor" style="height: 100%; object-fit: cover;">
+          </div>
+          <p class="img-caption">Prototype build — BLDC hub motor alongside the three-phase inverter, each phase on its own breadboard</p>
+        </div>
+      </div>
+
+      <div class="img-grid two" style="margin-top: 1rem;">
+        <div>
+          <div class="img-wrap" onclick="openLightbox('regen_img3.png')" style="height: 260px; overflow: hidden;">
+            <img src="regen_img3.png" alt="Gate driver IC closeup on breadboard" style="height: 100%; object-fit: cover;">
+          </div>
+          <p class="img-caption">L6387ED gate driver IC with bootstrap capacitor and resistors — one of three phase boards</p>
+        </div>
+        <div>
+          <div class="img-wrap" onclick="openLightbox('regen_img4.png')" style="height: 260px; overflow: hidden;">
+            <img src="regen_img4.png" alt="Team presenting at capstone showcase" style="height: 100%; object-fit: cover;">
+          </div>
+          <p class="img-caption">Capstone showcase — Damanpreet Basra, Chad Liu, Sufyan Jamal</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: 2rem;">
+        The inverter was constructed across three separate breadboards — one per phase — so each half-bridge could be independently built, wired, and verified before full integration. This also made troubleshooting easier during testing.
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="section">
+      <p class="section-label">Result</p>
+      <h2>What we achieved</h2>
+      <p class="prose">
+        Key subsystems were successfully validated in isolation — wiring integrity confirmed, gate driver inputs verified, and the ESP32 Hall sensor interface tested and functional. Full motor operation was not achieved within the project timeline due to breadboard current limitations causing gate drive failures across most MOSFETs.
+      </p>
+      <p class="prose">
+        MATLAB simulations predicted 2–5 J of recoverable energy per braking event and a measurable supercapacitor voltage rise. The design is theoretically sound — the primary next step is migrating to a PCB rated for the required current levels.
+      </p>
+    </div>
+
+    <!-- Report -->
+    <div class="section">
+      <p class="section-label">Documentation</p>
+      <h2>Full report</h2>
+      <p class="prose" style="margin-bottom: 1.5rem;">The complete 65-page report covers the full system design, analysis, MATLAB simulations, testing protocols, and recommendations for future work.</p>
+      <a class="btn" href="regen_report.pdf" target="_blank">↗ Download Full Report (PDF)</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">Chad Liu &mdash; <span id="year"></span></div>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="">
+</div>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>

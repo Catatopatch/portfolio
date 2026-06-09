@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chad Liu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f9f8f6; --surface: #ffffff; --text: #1a1916; --muted: #6b6a66;
+    --faint: #e8e7e3; --tag-bg: #f0efe9; --tag-text: #4a4946;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Mono', monospace; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 14px; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+  nav { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--faint); z-index: 100; padding: 1rem 0; }
+  nav .container { display: flex; justify-content: space-between; align-items: center; }
+  .nav-name { font-family: 'DM Serif Display', serif; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--text); text-decoration: none; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .hero { padding: 6rem 0 4rem; border-bottom: 1px solid var(--faint); }
+  .hero-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.8rem, 7vw, 4.5rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--text); margin-bottom: 1.5rem; }
+  .hero h1 em { font-style: italic; color: var(--muted); }
+  .hero-bio { max-width: 520px; color: var(--muted); font-size: 14px; line-height: 1.75; margin-bottom: 2rem; }
+  .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero-links a { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 12px; letter-spacing: 0.03em; color: var(--text); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--faint); background: var(--surface); transition: border-color 0.2s, background 0.2s; }
+  .hero-links a:hover { border-color: var(--text); background: var(--tag-bg); }
+  section { padding: 4rem 0; border-bottom: 1px solid var(--faint); }
+  .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; letter-spacing: -0.01em; }
+  .section-count { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+  .project-grid { display: flex; flex-direction: column; }
+  .project { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; padding: 1.5rem 0; border-top: 1px solid var(--faint); text-decoration: none; color: inherit; }
+  .project:first-child { border-top: none; }
+  .project:hover .project-title { text-decoration: underline; text-underline-offset: 3px; }
+  .project-title { font-family: 'DM Serif Display', serif; font-size: 1.15rem; margin-bottom: 0.35rem; color: var(--text); }
+  .project-desc { color: var(--muted); font-size: 13px; line-height: 1.6; margin-bottom: 0.75rem; }
+  .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tag { font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--tag-text); background: var(--tag-bg); padding: 0.2rem 0.6rem; }
+  .project-arrow { color: var(--muted); font-size: 1.2rem; margin-top: 0.2rem; transition: transform 0.2s, color 0.2s; }
+  .project:hover .project-arrow { transform: translate(2px, -2px); color: var(--text); }
+  .exp-list { display: flex; flex-direction: column; }
+  .exp { display: grid; grid-template-columns: 130px 1fr; gap: 1.5rem; padding: 1.5rem 0; border-top: 1px solid var(--faint); }
+  .exp:first-child { border-top: none; }
+  .exp-date { font-size: 11px; color: var(--muted); letter-spacing: 0.02em; line-height: 1.5; padding-top: 0.15rem; }
+  .exp-company { font-family: 'DM Serif Display', serif; font-size: 1.1rem; margin-bottom: 0.2rem; }
+  .exp-role { font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+  .exp-bullets { list-style: none; padding: 0; }
+  .exp-bullets li { font-size: 13px; color: var(--muted); line-height: 1.65; padding: 0.2rem 0 0.2rem 1rem; position: relative; }
+  .exp-bullets li::before { content: "—"; position: absolute; left: 0; color: var(--faint); }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .contact-section { padding: 4rem 0; border-bottom: none; }
+  .contact-email { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--text); padding-bottom: 2px; transition: opacity 0.2s; }
+  .contact-email:hover { opacity: 0.6; }
+  footer { padding: 2rem 0; text-align: center; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+  @media (max-width: 540px) {
+    .exp { grid-template-columns: 1fr; gap: 0.5rem; }
+    .project { grid-template-columns: 1fr; }
+    .project-arrow { display: none; }
+    .nav-links { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="nav-name" href="#">Chad Liu</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <section class="hero">
+      <p class="hero-label">Electrical Engineering &mdash; Western University &mdash; US & Canadian Citizen</p>
+      <h1>Chad Liu &mdash;<br><em>engineer & builder.</em></h1>
+      <p class="hero-bio">
+        Electrical engineering student at Western University with hands-on experience in circuit design, PCB layout, motor control, and GIS data analytics. I like building things that actually work.
+      </p>
+      <div class="hero-links">
+        <a href="mailto:chadliu111@gmail.com">chadliu111@gmail.com</a>
+        <a href="tel:6475710278">(647) 571-0278</a>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-header">
+        <h2 class="section-title">Projects</h2>
+        <span class="section-count">— 5 builds</span>
+      </div>
+      <div class="project-grid">
+
+        <a class="project" href="regen.html">
+          <div>
+            <p class="project-title">Regenerative Braking System — E-bikes/E-scooters</p>
+            <p class="project-desc">Capstone project. Built a custom 3-phase motor inverter and rectifier to control a BLDC motor. Designed the hall sensor interface circuit to connect to an ESP32 microcontroller, then built, verified, and tested all wiring and component integration.</p>
+            <div class="project-tags">
+              <span class="tag">ESP32</span>
+              <span class="tag">BLDC Motor</span>
+              <span class="tag">3-Phase Inverter</span>
+              <span class="tag">Embedded</span>
+              <span class="tag">2025–2026</span>
+            </div>
+          </div>
+          <span class="project-arrow">↗</span>
+        </a>
+
+        <a class="project" href="#">
+          <div>
+            <p class="project-title">Buck Converter — Welder Power Supply</p>
+            <p class="project-desc">Designed a current-controlled buck power supply capable of handling up to 100V. Integrated sensors, MOSFETs, and op-amps with full PCB and schematic work in EAGLE and Microcap.</p>
+            <div class="project-tags">
+              <span class="tag">EAGLE</span>
+              <span class="tag">MicroCap</span>
+              <span class="tag">PCB Design</span>
+              <span class="tag">Power Electronics</span>
+              <span class="tag">2025</span>
+            </div>
+          </div>
+          <span class="project-arrow">↗</span>
+        </a>
+
+        <a class="project" href="bldc.html">
+          <div>
+            <p class="project-title">3-Phase BLDC Motor</p>
+            <p class="project-desc">Designed and modeled a functional DC motor in SolidWorks that achieved 2000 RPM. Analyzed theoretical performance using MATLAB to calculate key design parameters and component values.</p>
+            <div class="project-tags">
+              <span class="tag">SolidWorks</span>
+              <span class="tag">MATLAB</span>
+              <span class="tag">CAD</span>
+              <span class="tag">2024</span>
+            </div>
+          </div>
+          <span class="project-arrow">↗</span>
+        </a>
+
+        <a class="project" href="#">
+          <div>
+            <p class="project-title">Function Generator</p>
+            <p class="project-desc">Built a 4-stage op-amp function generator capable of producing four waveform types. Designed schematics and PCBs in MicroCap and EAGLE, then built and tested the physical circuit.</p>
+            <div class="project-tags">
+              <span class="tag">MicroCap</span>
+              <span class="tag">EAGLE</span>
+              <span class="tag">Op-Amps</span>
+              <span class="tag">2023</span>
+            </div>
+          </div>
+          <span class="project-arrow">↗</span>
+        </a>
+
+        <a class="project" href="#">
+          <div>
+            <p class="project-title">Line Following RC Rover</p>
+            <p class="project-desc">Built an RC rover that autonomously follows a black line on a white surface using photoresistors.</p>
+            <div class="project-tags">
+              <span class="tag">Embedded</span>
+              <span class="tag">Sensors</span>
+              <span class="tag">2022</span>
+            </div>
+          </div>
+          <span class="project-arrow">↗</span>
+        </a>
+
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-header">
+        <h2 class="section-title">Experience</h2>
+        <span class="section-count">— 2 roles</span>
+      </div>
+      <div class="exp-list">
+
+        <div class="exp">
+          <div class="exp-date">July 2024 &mdash; Aug 2025</div>
+          <div>
+            <p class="exp-company">City of Vaughan PMO</p>
+            <p class="exp-role">Intern &mdash; Strategic Data Analytics / GIS</p>
+            <ul class="exp-bullets">
+              <li>Built 10 internal SharePoint homepages for PMO, Development Engineering, Policy Planning, and Special Programs.</li>
+              <li>Developed a central repository with hyperlinks to 100+ ongoing projects to streamline access across departments.</li>
+              <li>Designed and updated 12 project charter templates in Word and Excel, with milestones and risks visualized through Power BI.</li>
+              <li>Created 300+ GIS-based metadata sheets for database archiving and produced Eclipse PPM training videos for new users.</li>
+              <li>Reviewed and organized 2023–2025 engineering and site plan drawings using GIS mapping in Power BI.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp">
+          <div class="exp-date">July &mdash; Aug 2023</div>
+          <div>
+            <p class="exp-company">MTCC Villa Elegance Condominium</p>
+            <p class="exp-role">Administrative & Event Coordinator</p>
+            <ul class="exp-bullets">
+              <li>Reorganized 14 years of corporate files in Excel, building an alphabetical recordkeeping system from scratch.</li>
+              <li>Assisted the corporation owner with administrative tasks, check requisitions, and data handling.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="section-header">
+        <h2 class="section-title">Skills</h2>
+      </div>
+      <div class="skills-grid">
+        <span class="tag">EAGLE</span>
+        <span class="tag">Altium</span>
+        <span class="tag">AutoCAD</span>
+        <span class="tag">SolidWorks</span>
+        <span class="tag">MicroCap</span>
+        <span class="tag">LTSpice</span>
+        <span class="tag">C++</span>
+        <span class="tag">Java</span>
+        <span class="tag">Python</span>
+        <span class="tag">MATLAB</span>
+        <span class="tag">Power BI</span>
+        <span class="tag">Excel</span>
+        <span class="tag">SharePoint</span>
+        <span class="tag">Power Analysis</span>
+        <span class="tag">Neural Networks / AI</span>
+        <span class="tag">Control Systems</span>
+        <span class="tag">PLCs</span>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <div class="section-header">
+        <h2 class="section-title">Contact</h2>
+      </div>
+      <div>
+        <p style="color: var(--muted); font-size: 13px; line-height: 1.75; margin-bottom: 1.5rem;">
+          Open to internships, co-ops, and interesting projects. Feel free to reach out.
+        </p>
+        <a class="contact-email" href="mailto:chadliu111@gmail.com">chadliu111@gmail.com</a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">Chad Liu &mdash; <span id="year"></span></div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
